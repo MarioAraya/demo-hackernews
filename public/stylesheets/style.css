@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+.container__header {
+  height: 120px;
+  background: #00B7FF;
+}
