@@ -1,5 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div.container.container__header
+    h1 #{title}
+    p #{subtitle}
+  div.container.container__body
+    dl.row
+      each post in feed
+        dt.col-sm-10.h5 #{post.story_title} 
+          span - #{post.author}
+        dt.col-sm-2 #{post.created_at}

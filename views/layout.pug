@@ -1,7 +1,20 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title HN Feed
+    // Bootstrap core CSS
+    link(href='stylesheets/bootstrap.min.css', rel='stylesheet')
+    link(href='stylesheets/style.css', rel='stylesheet')
   body
     block content
+    
+    // Bootstrap core JavaScript
+    script(src='javascripts/jquery-3.3.1.min.js')
+    script(src='https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js')
+    script(src='https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js')
+
+
