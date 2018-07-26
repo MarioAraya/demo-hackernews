@@ -7,6 +7,9 @@ block content
   div.container.container__body
     dl.row
       each post in feed
-        dt.col-sm-10.h5 #{post.story_title} 
+        dt.col-sm-9.h5 #{post.story_title} 
           span - #{post.author}
-        dt.col-sm-2 #{post.created_at}
+        dt.col-sm-2 #{formatDate(post.created_at)}
+        dt.col-sm-1 
+          img.image(src='/images/baseline-delete_forever-24px.svg' )
+
