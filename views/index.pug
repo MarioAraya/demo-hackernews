@@ -1,15 +1,15 @@
 extends layout
 
 block content
-  div.container.container__header
+  div.container__header
     h1 #{title}
     p #{subtitle}
-  div.container.container__body
-    dl.row
+  div.container__body
+    dl.row.post
       each post in feed
-        dt.col-sm-9.h5 #{post.story_title} 
-          span - #{post.author}
-        dt.col-sm-2 #{formatDate(post.created_at)}
+        dt.col-sm-8.h5 #{post.story_title} 
+          span.post-author - #{post.author}
+        dt.col-sm-3.prettyDate #{post.created_at}
         dt.col-sm-1 
           img.image(src='/images/baseline-delete_forever-24px.svg' )
 
