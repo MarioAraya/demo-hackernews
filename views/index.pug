@@ -7,7 +7,9 @@ block content
   div.container__body
     dl.row.post
       each post in feed
-        dt.col-sm-8.h5 #{post.story_title} 
+        dt.col-sm-8.h5 
+          a(href='http://www.google.com', target='_blank')
+            | #{post.story_title} 
           span.post-author - #{post.author}
         dt.col-sm-3.prettyDate #{post.created_at}
         dt.col-sm-1 
