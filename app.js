@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var mongoMethods = require('./src/mongo-methods')
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -35,5 +35,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Execute once an hour the News Request & SaveToDB
+mongoMethods.scheduleJob()
 
 module.exports = app;
