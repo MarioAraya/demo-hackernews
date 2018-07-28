@@ -7,11 +7,19 @@ block content
   div.container__body
     dl.row.post
       each post in feed
-        dt.col-sm-8.h5 
-          a(href='http://www.google.com', target='_blank')
-            | #{post.story_title} 
-          span.post-author - #{post.author}
-        dt.col-sm-3.prettyDate #{post.created_at}
-        dt.col-sm-1 
-          img.image(src='/images/baseline-delete_forever-24px.svg' )
+        if post
+          dt.col-sm-8.h5 
+            a(href='http://www.google.com', target='_blank')
+              | #{post.story_title} 
+            span.post-author - #{post.author}
+          dt.col-sm-3.prettyDate #{post.created_at}
+          dt.col-sm-1 
+            img.image(src='/images/baseline-delete_forever-24px.svg' )
+        else
+          dt.col-sm-8.h5 
+            a(href='http://www.google.com', target='_blank')
+            span.post-author - nadie
+          dt.col-sm-3.prettyDate Hoy
+          dt.col-sm-1 
+            img.image(src='/images/baseline-delete_outline-24px.svg' )
 
