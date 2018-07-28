@@ -13,7 +13,24 @@ body {
 .row .col-sm-10, .row .col-sm-2 {
   height: 35px;
   line-height: 35px;
-  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  border: 1px #ccc;
+}
+.row:hover {
+  background-color: #fafafa;
+}
+.post-title, .post-time {
+  color: #333;
+  font-size: 13pt;
+}
+.post-author {
+  color:#999;
+}
+.delicon {
+  color:red;
+}
+.delicon:hover {
+  color:green;
 }
 .post-author {
   font-size: 12px;

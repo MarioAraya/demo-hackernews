@@ -7,19 +7,11 @@ block content
   div.container__body
     dl.row.post
       each post in feed
-        if post
-          dt.col-sm-8.h5 
-            a(href='http://www.google.com', target='_blank')
-              | #{post.story_title} 
+        if post && (post.story_title || post.title)
+          dt.col-sm-8.h5.post-title
+            a(href=post.story_url || post.url, target='_blank')
+              | #{post.story_title || post.title} 
             span.post-author - #{post.author}
-          dt.col-sm-3.prettyDate #{post.created_at}
+          dt.col-sm-3.post-time.prettyDate #{post.created_at}
           dt.col-sm-1 
             img.image(src='/images/baseline-delete_forever-24px.svg' )
-        else
-          dt.col-sm-8.h5 
-            a(href='http://www.google.com', target='_blank')
-            span.post-author - nadie
-          dt.col-sm-3.prettyDate Hoy
-          dt.col-sm-1 
-            img.image(src='/images/baseline-delete_outline-24px.svg' )
-
