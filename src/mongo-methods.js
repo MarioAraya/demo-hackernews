@@ -6,7 +6,7 @@ const MongoUrl = 'mongodb://127.0.0.1:27017';
 // Once an hour, read from API-News-Endpoint and add new posts to Db
 var scheduleJob = function() {
     cron = require('node-schedule');
-    cron.scheduleJob('*/9 * * * *', function(){ 
+    cron.scheduleJob('*/1 * * * *', function(){ 
         console.log('News requested from Url')
         axios.get(newsUrl)
             .then(json => {
@@ -19,10 +19,27 @@ var scheduleJob = function() {
                     db.collection('hnNews').insert(hits, function (err, result) {
                         if (err) return err
                         console.log('hits inserted OK!')
-                        //db.close();
                     });
                 });
             })
+            .catch(function (error) {
+                if (error.response) {
+                  // The request was made and the server responded with a status code
+                  // that falls out of the range of 2xx
+                  console.log(error.response.data);
+                  console.log(error.response.status);
+                  console.log(error.response.headers);
+                } else if (error.request) {
+                  // The request was made but no response was received
+                  // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                  // http.ClientRequest in node.js
+                  console.log(error.request);
+                } else {
+                  // Something happened in setting up the request that triggered an Error
+                  console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
     })
 };
 
