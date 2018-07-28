@@ -1,43 +1,42 @@
-const request = require('request');
+const axios = require('axios');
 const newsUrl = 'https://hn.algolia.com/api/v1/search_by_date?query=nodejs';
 const MongoClient = require('mongodb').MongoClient;
 const MongoUrl = 'mongodb://127.0.0.1:27017';
-// Database Name
-const dbName = 'hnNews';
 
 // Once an hour, read from API-News-Endpoint and add new posts to Db
 var scheduleJob = function() {
-    var cron = require('node-schedule');
-    cron.scheduleJob('*/1 * * * *', function(){ 
-        console.log('job executed!')
-        let jsonNews = getNewsFromUrl();
+    cron = require('node-schedule');
+    cron.scheduleJob('*/9 * * * *', function(){ 
+        console.log('News requested from Url')
+        axios.get(newsUrl)
+            .then(json => {
+                console.log('Hits loaded', json.data.hits.length)
+                return json.data.hits;
+            })
+            .then(hits => {
+                MongoClient.connect(MongoUrl, function(err, client) {
+                    db = client.db('hndatabase');
+                    db.collection('hnNews').insert(hits, function (err, result) {
+                        if (err) return err
+                        console.log('hits inserted OK!')
+                        //db.close();
+                    });
+                });
+            })
     })
 };
 
-// Request news URL
-var getNewsFromUrl = function() {
-    console.log('getNewsFromUrl reached!')
-    request(newsUrl, { json: true }, (err, res, body) => {
-        if (err) { return console.log(err); }
-        return JSON.parse(body).hits;
+var getAllNewsFromDb = function(callback) {
+    MongoClient.connect(MongoUrl, function(err, client) {
+        db = client.db('hndatabase');
+        db.collection('hnNews').find().toArray((err, items) => {
+            if (err) throw err;
+            callback(items)
+        });
     });
 };
 
-var saveToDb = function() {
-    // Connect using MongoClient
-    MongoClient.connect(MongoUrl, function(err, client) {
-        // Use the admin database for the operation
-        const adminDb = client.db(dbName).admin();
-
-        // List all the available databases
-        // adminDb.listDatabases(function(err, dbs) {
-        //     test.equal(null, err);
-        //     test.ok(dbs.databases.length > 0);
-        //     client.close();
-        // });
-    });
+module.exports = {
+    scheduleJob: scheduleJob,
+    getAllNewsFromDb: getAllNewsFromDb
 }
-
-// getAllNewsFromDb() 
-
-module.exports.scheduleJob = scheduleJob
