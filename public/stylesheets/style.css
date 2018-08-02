@@ -16,7 +16,7 @@ body {
   background-color: #fff;
   border: 1px #ccc;
 }
-.row:hover {
+.row:hover{
   background-color: #fafafa;
 }
 .post-title, .post-time {
