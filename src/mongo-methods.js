@@ -15,11 +15,11 @@ var scheduleJob = function() {
             })
             .then(hits => {
                 MongoClient.connect(MongoUrl, function(err, client) {
+                    if (err) return err;
                     db = client.db('hndatabase');
-                    db.collection('hnNews').insert(hits, function (err, result) {
-                        if (err) return err
-                        console.log('hits inserted OK!')
-                    });
+                    hits.forEach(function(newsItem) { 
+                        db.collection('hnNews').update(newsItem, {'$set': {"deleted": false}}, { upsert: true, many: true });
+                    })
                 });
             })
             .catch(function (error) {
