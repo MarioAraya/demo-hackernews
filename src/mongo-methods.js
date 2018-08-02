@@ -6,7 +6,7 @@ const MongoUrl = 'mongodb://127.0.0.1:27017';
 // Once an hour, read from API-News-Endpoint and add new posts to Db
 var scheduleJob = function() {
     cron = require('node-schedule');
-    cron.scheduleJob('*/1 * * * *', function(){ 
+    cron.scheduleJob('0 */1 * * *', function(){ 
         console.log('News requested from Url')
         axios.get(newsUrl)
             .then(json => {
