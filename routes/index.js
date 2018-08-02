@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoMethods = require('../src/mongo-methods')
 
-/* GET home page. */
+/* GET news from DataBase */
 router.get('/', function(req, res, next) {
   mongoMethods.getAllNewsFromDb(function(result) {
     console.log('getAllNewsFromDb OK !!!');
@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   }
 )});
 
-/* GET just data */
+/* GET news from DataBase as JSON DATA */
 router.get('/dataonly', function(req, res, next) {
   mongoMethods.getAllNewsFromDb(function(result) {
     res.send(result)    
