@@ -24,7 +24,45 @@ formatDate = function (time) {
             return v ? v : '';
 };
 
+// Stores the URL of the 'deleted' news in localStorage() 
+// so don't show them again
+bindBtnDeleteOnClick = function(title) {
+    var imgs = document.querySelectorAll(".btnDelete")
+    Array.from(imgs).forEach((imgElement) => {
+        imgElement.addEventListener('click', function (event) {
+            var urlDeleted = imgElement.parentNode.previousSibling.previousSibling.querySelector('a').href;
+            var linkElement = imgElement.parentNode.previousSibling.previousSibling;
+            deleteNewsByUrl_LocalStorage(urlDeleted)
+            hideRow(linkElement)
+        })
+    })
+}
+deleteNewsByUrl_LocalStorage = function(urlDeleted) {
+    localStorage["deletedNews"] = localStorage["deletedNews"].concat(urlDeleted)
+}
+hideRow = function(postElement) {
+    postElement.classList.add('hideNews')
+    postElement.nextSibling.classList.add('hideNews')
+    postElement.nextSibling.nextSibling.classList.add('hideNews')
+}
+hideDeletedNews = function() {
+    var postUrls = document.querySelectorAll(".post-url")
+    var deletedNews = localStorage["deletedNews"] || ""
+    postUrls.forEach((linkElement) => {
+        if (deletedNews.indexOf(linkElement.href) > -1) {
+            console.log(linkElement.href)
+            hideRow(linkElement.parentNode)
+        }
+    })
+}
+
 // Parse all ugly-dates into prettyDates
-document.querySelectorAll('.prettyDate').forEach( date => {
-    date.textContent = formatDate(date.textContent)
-})
+prettifyDates = function () {
+    document.querySelectorAll('.prettyDate').forEach( date => {
+        date.textContent = formatDate(date.textContent)
+    })
+}
+
+bindBtnDeleteOnClick()
+hideDeletedNews()
+prettifyDates()

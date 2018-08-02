@@ -35,3 +35,10 @@ body {
 .post-author {
   font-size: 12px;
 }
+.btnDelete {
+  cursor: pointer;
+}
+.hideNews {
+  display: none;
+  visibility: hidden;
+}
